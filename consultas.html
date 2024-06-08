@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas - Rede Social de Saúde</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 12px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            /*min-height: 100vh;*/
+            margin-top: 3px;
+            flex-direction: column;
+        }
+
+        body {
+            margin: 10px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(315deg, rgb(9, 33, 250) 3%, rgb(250, 247, 79) 38%, rgb(141, 250, 119) 68%, rgba(255,25,25,1) 98%);
+            animation: gradient 15s ease infinite;
+            background-size: 400% 400%;
+            background-attachment: fixed;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        .wave {
+            background: rgb(255 255 255 / 25%);
+            border-radius: 1000% 1000% 0 0;
+            position: fixed;
+            width: 200%;
+            height: 12em;
+            animation: wave 10s -3s linear infinite;
+            transform: translate3d(0, 0, 0);
+            opacity: 0.8;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .wave:nth-of-type(2) {
+            bottom: -1.25em;
+            animation: wave 18s linear reverse infinite;
+            opacity: 0.8;
+        }
+
+        .wave:nth-of-type(3) {
+            bottom: -2.5em;
+            animation: wave 20s -1s reverse infinite;
+            opacity: 0.9;
+        }
+
+        @keyframes wave {
+            2% {
+                transform: translateX(1);
+            }
+
+            25% {
+                transform: translateX(-25%);
+            }
+
+            50% {
+                transform: translateX(-50%);
+            }
+
+            75% {
+                transform: translateX(-25%);
+            }
+
+            100% {
+                transform: translateX(1);
+            }
+        }
+
+        .container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 400px;
+            margin: 10px;
+            text-align: center;
+        }
+        h1, h3 {
+            color: #ffffff;
+        }
+        .button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin: 10px;
+        }
+        .button1 {
+            padding: 10px 15px;
+            border: none;
+            background-color: #e21616;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin: 10px;
+        }
+        .button1:hover {
+            background-color: #ce2f2f;
+            box-shadow: 0 0 10px #a04545;
+        }
+        .button:hover {
+            background-color: #45a049;
+            box-shadow: 0 0 10px #45a049;
+        }
+        input, select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #333;
+            color: #ffffff;
+            transition: box-shadow 0.3s ease;
+            box-sizing: border-box;
+           /*text-align: center;*/
+        }
+        input:focus, select:focus {
+            box-shadow: 0 0 10px #4caf50;
+        }
+        select[disabled] {
+            background-color: #444;
+            cursor: not-allowed;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            text-align: left;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+        .input-group select {
+            width: 100%;
+        }
+        .input-group.input-inline {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        .input-group.input-inline input[type="date"],
+        .input-group.input-inline input[type="time"] {
+            width: 47%;
+            margin: 0 5px;
+        }
+        .input-group.time input {
+            margin-right: 0;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="marcarConsultaContainer">
+        <h1>Marcar Consulta</h1>
+        <h3 id="consultaHeader"></h3>
+        <form id="marcarConsultaForm">
+            <div class="input-group">
+                <label for="usuario">Usuário:</label>
+                <select id="usuario" name="usuario" disabled>
+                    <option id="usuarioOption"></option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="especialidade">Especialidade:</label>
+                <select id="especialidade" name="especialidade" required>
+                    <option value="Oftalmologia">Oftalmologia</option>
+<option value="Ortopedia">Ortopedia</option>
+<option value="Endocrinologia">Endocrinologia</option>
+<option value="Neurologia">Neurologia</option>
+<option value="Otorrinolaringologia">Otorrinolaringologia</option>
+<option value="Urologia">Urologia</option>
+<option value="Psiquiatria">Psiquiatria</option>
+<option value="Nutrição">Nutrição</option>
+<option value="Fisioterapia">Fisioterapia</option>
+<option value="Odontologia">Odontologia</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="postoMedico">Posto Médico:</label>
+                <select id="postoMedico" name="postoMedico" required>
+                    <option value="">Selecione</option>
+    <option value="USF BNH De Mage">USF BNH De Mage</option>
+    <option value="USF Britador">USF Britador</option>
+    <option value="USF Cachoeira Grande">USF Cachoeira Grande</option>
+    <option value="USF Cachoeirinha">USF Cachoeirinha</option>
+    <option value="USF Canal">USF Canal</option>
+    <option value="USF Cantinho Da Vovo">USF Cantinho Da Vovo</option>
+    <option value="USF Barbuda">USF Barbuda</option>
+    <option value="USF Capela">USF Capela</option>
+    <option value="USF Conceicao">USF Conceicao</option>
+    <option value="USF Flexeira">USF Flexeira</option>
+    <option value="USF Lagoa">USF Lagoa</option>
+    <option value="USF Rua Da Guia">USF Rua Da Guia</option>
+    <option value="USF De Andorinhas">USF Andorinhas</option>
+    <option value="USF De Citrolandia">USF Citrolandia</option>
+    <option value="USF De Jardim Nazareno">USF Jardim Nazareno</option>
+    <option value="USF Maurimarcia">USF Maurimarcia</option>
+    <option value="USF Parque Dos Artistas">USF Parque Dos Artistas</option>
+    <option value="USF Pau Grande">USF Pau Grande</option>
+    <option value="USF Piedade">USF Piedade</option>
+    <option value="USF Poco Escuro">USF Poco Escuro</option>
+    <option value="USF Rio Do Ouro">USF Rio Do Ouro</option>
+    <option value="USF Sao Francisco">USF Sao Francisco</option>
+    <option value="USF Vila Serrana II">USF Vila Serrana II</option>
+    <option value="USF Ypiranga">USF Ypiranga</option>
+    <option value="USF Anil">USF Anil</option>
+    <option value="USF Buraco Da Onca">USF Buraco Da Onca</option>
+    <option value="USF Campinho">USF Campinho</option>
+    <option value="USF Novo Horizonte">USF Novo Horizonte</option>
+    <option value="USF Parque Cacula">USF Parque Cacula</option>
+    <option value="USF Parque Estrela">USF Parque Estrela</option>
+    <option value="USF Partido">USF Partido</option>
+    <option value="USF Guarani II">USF Guarani II</option>
+    <option value="USF Guarani III">USF Guarani III</option>
+    <option value="USF Jardim Bela Floresta">USF Jardim Bela Floresta</option>
+    <option value="USF Jardim Da Paz">USF Jardim Da Paz</option>
+    <option value="USF Leque Azul">USF Leque Azul</option>
+    <option value="USF Parque Iriri">USF Parque Iriri</option>
+    <option value="USF Parque Maita">USF Parque Maita</option>
+    <option value="USF Parque Santana">USF Parque Santana</option>
+    <option value="USF Ponte Preta">USF Ponte Preta</option>
+    <option value="USF Raiz Da Serra">USF Raiz Da Serra</option>
+    <option value="USF Santa Dalila">USF Santa Dalila</option>
+    <option value="USF Sao Francisco Do Goia">USF Sao Francisco Do Goia</option>
+    <option value="USF Sao Sebastiao">USF Sao Sebastiao</option>
+    <option value="USF Sayonara">USF Sayonara</option>
+    <option value="USF Vila Carvalho">USF Vila Carvalho</option>
+    <option value="USF Vila Esperanca">USF Vila Esperanca</option>
+    <option value="USF Vila Nova">USF Vila Nova</option>
+    <option value="USF Vila Recreio">USF Vila Recreio</option>
+    <option value="USF Vila Serrana I">USF Vila Serrana I</option>
+    <option value="USF Villar Santo Aleixo">USF Villar Santo Aleixo</option>
+    <option value="UBS Guarani">UBS Guarani</option>
+    <option value="UBS Nova Marilia">UBS Nova Marilia</option>
+                </select>
+            </div>
+            <div class="input-group input-inline">
+                <label for="data">Data:</label>
+                <input type="date" id="data" name="data" required>
+                <label for="hora">Hora:</label>
+                <input type="time" id="hora" name="hora" required>
+            </div>
+            <div class="button-group">
+                <button type="button" class="button1" id="voltarPerfilButton">Voltar</button>
+                <button type="submit" class="button">Marcar consulta</button>
+                <button type="button" class="button" id="verConsultasButton">Ver Consultas</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container hidden" id="verConsultasContainer">
+        <h1>Consultas Agendadas</h1>
+        <ul id="consultasList"></ul>
+        <div class="button-group">
+            <button class="button" id="voltarButton">Voltar</button>
+        </div>
+    </div>
+
+    <script>
+        const marcarConsultaContainer = document.getElementById('marcarConsultaContainer');
+        const verConsultasContainer = document.getElementById('verConsultasContainer');
+        const marcarConsultaForm = document.getElementById('marcarConsultaForm');
+        const verConsultasButton = document.getElementById('verConsultasButton');
+        const voltarPerfilButton = document.getElementById('voltarPerfilButton');
+        const voltarButton = document.getElementById('voltarButton');
+        const consultasList = document.getElementById('consultasList');
+        const consultas = JSON.parse(localStorage.getItem('consultas')) || [];
+        const usuarioAtual = JSON.parse(localStorage.getItem('usuarioAtual'));
+        const usuarioOption = document.getElementById('usuarioOption');
+
+        if (!usuarioAtual) {
+            window.location.href = 'index.html';
+        } else {
+            document.getElementById('consultaHeader').textContent = `Olá, ${usuarioAtual.nome} ${usuarioAtual.sobrenome}`;
+            usuarioOption.textContent = `${usuarioAtual.nome} ${usuarioAtual.sobrenome}`;
+        }
+
+        function renderConsultas() {
+            consultasList.innerHTML = '';
+            const consultasUsuario = consultas.filter(c => c.email === usuarioAtual.email);
+            consultasUsuario.forEach(consulta => {
+                const li = document.createElement('li');
+                li.textContent = `${consulta.especialidade} - ${consulta.postoMedico} - ${consulta.data} às ${consulta.hora}`;
+                consultasList.appendChild(li);
+            });
+        }
+
+        marcarConsultaForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const especialidade = marcarConsultaForm.especialidade.value;
+            const postoMedico = marcarConsultaForm.postoMedico.value;
+            const data = marcarConsultaForm.data.value;
+            const hora = marcarConsultaForm.hora.value;
+            const consulta = { email: usuarioAtual.email, especialidade, postoMedico, data, hora };
+            consultas.push(consulta);
+            localStorage.setItem('consultas', JSON.stringify(consultas));
+            marcarConsultaForm.reset();
+        });
+
+        verConsultasButton.addEventListener('click', () => {
+            marcarConsultaContainer.classList.add('hidden');
+            verConsultasContainer.classList.remove('hidden');
+            renderConsultas();
+        });
+
+        voltarButton.addEventListener('click', () => {
+            verConsultasContainer.classList.add('hidden');
+            marcarConsultaContainer.classList.remove('hidden');
+        });
+
+        voltarPerfilButton.addEventListener('click', () => {
+            window.location.href = 'perfil.html';
+        });
+    </script>
+</body>
+</html>
