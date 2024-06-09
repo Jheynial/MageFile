@@ -4,197 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultas - Rede Social de Saúde</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            margin: 12px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            /*min-height: 100vh;*/
-            margin-top: 3px;
-            flex-direction: column;
-        }
-
-        body {
-            margin: 10px;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow: hidden;
-            background: linear-gradient(315deg, rgb(9, 33, 250) 3%, rgb(250, 247, 79) 38%, rgb(141, 250, 119) 68%, rgba(255,25,25,1) 98%);
-            animation: gradient 15s ease infinite;
-            background-size: 400% 400%;
-            background-attachment: fixed;
-        }
-
-        @keyframes gradient {
-            0% {
-                background-position: 0% 0%;
-            }
-            50% {
-                background-position: 100% 100%;
-            }
-            100% {
-                background-position: 0% 0%;
-            }
-        }
-
-        .wave {
-            background: rgb(255 255 255 / 25%);
-            border-radius: 1000% 1000% 0 0;
-            position: fixed;
-            width: 200%;
-            height: 12em;
-            animation: wave 10s -3s linear infinite;
-            transform: translate3d(0, 0, 0);
-            opacity: 0.8;
-            bottom: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        .wave:nth-of-type(2) {
-            bottom: -1.25em;
-            animation: wave 18s linear reverse infinite;
-            opacity: 0.8;
-        }
-
-        .wave:nth-of-type(3) {
-            bottom: -2.5em;
-            animation: wave 20s -1s reverse infinite;
-            opacity: 0.9;
-        }
-
-        @keyframes wave {
-            2% {
-                transform: translateX(1);
-            }
-
-            25% {
-                transform: translateX(-25%);
-            }
-
-            50% {
-                transform: translateX(-50%);
-            }
-
-            75% {
-                transform: translateX(-25%);
-            }
-
-            100% {
-                transform: translateX(1);
-            }
-        }
-
-        .container {
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            width: 90%;
-            max-width: 400px;
-            margin: 10px;
-            text-align: center;
-        }
-        h1, h3 {
-            color: #ffffff;
-        }
-        .button {
-            padding: 10px 15px;
-            border: none;
-            background-color: #4caf50;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            margin: 10px;
-        }
-        .button1 {
-            padding: 10px 15px;
-            border: none;
-            background-color: #e21616;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            margin: 10px;
-        }
-        .button1:hover {
-            background-color: #ce2f2f;
-            box-shadow: 0 0 10px #a04545;
-        }
-        .button:hover {
-            background-color: #45a049;
-            box-shadow: 0 0 10px #45a049;
-        }
-        input, select {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #333;
-            border-radius: 5px;
-            background-color: #333;
-            color: #ffffff;
-            transition: box-shadow 0.3s ease;
-            box-sizing: border-box;
-           /*text-align: center;*/
-        }
-        input:focus, select:focus {
-            box-shadow: 0 0 10px #4caf50;
-        }
-        select[disabled] {
-            background-color: #444;
-            cursor: not-allowed;
-        }
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-        }
-        .input-group label {
-            text-align: left;
-            margin-bottom: 5px;
-            color: #ffffff;
-        }
-        .input-group select {
-            width: 100%;
-        }
-        .input-group.input-inline {
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-        }
-        .input-group.input-inline input[type="date"],
-        .input-group.input-inline input[type="time"] {
-            width: 47%;
-            margin: 0 5px;
-        }
-        .input-group.time input {
-            margin-right: 0;
-        }
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        .hidden {
-            display: none;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
-            background-color: #333;
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
+    <link id="styleSheetLink" rel="stylesheet"  href="consultas.css" media="screen">
+    
 </head>
 <body>
     <div class="container" id="marcarConsultaContainer">
@@ -203,7 +14,7 @@
         <form id="marcarConsultaForm">
             <div class="input-group">
                 <label for="usuario">Usuário:</label>
-                <select id="usuario" name="usuario" disabled>
+                <select class="zeraseta" id="usuario" name="usuario" disabled>
                     <option id="usuarioOption"></option>
                 </select>
             </div>
@@ -302,7 +113,14 @@
             <button class="button" id="voltarButton">Voltar</button>
         </div>
     </div>
-
+<!-- botão white -->
+<div>
+    <input type="checkbox" class="checkbox" id="toggleStyleSheetCheckbox"/>
+    <label class="label" for="toggleStyleSheetCheckbox">
+      <i class="fas fa-moon"></i>
+      <i class="fas fa-sun"></i>
+      <div class="ball"></div>
+    </label>
     <script>
         const marcarConsultaContainer = document.getElementById('marcarConsultaContainer');
         const verConsultasContainer = document.getElementById('verConsultasContainer');
@@ -359,5 +177,7 @@
             window.location.href = 'perfil.html';
         });
     </script>
+     <script src="script.js" defer></script>
+     <script src="https://kit.fontawesome.com/998c60ef77.js" crossorigin="anonymous"></script>
 </body>
 </html>
